@@ -186,9 +186,9 @@ void YachtState::ApplyNormalAction(Action move, int player) {
         score += die;
       }
     }
+    scores_[player] += score;
   }
 
-  scores_[player] += score;
 
   if (move == kFillThrees) {
     scoring_sheets_[player].threes = filled;
@@ -200,6 +200,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
           score += die;
         }
       }
+    scores_[player] += score;
   }
 
   if (move == kFillFours) {
@@ -212,6 +213,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
         score += die;
       }
     }
+    scores_[player] += score;
   }
 
   if (move == kFillFives) {
@@ -224,6 +226,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
         score += die;
       }
     }
+    scores_[player] += score;
   }
 
   if (move == kFillSixes) {
@@ -236,6 +239,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
         score += die;
       }
     }
+    scores_[player] += score;
   }
 
   if (move == kFillThreeOfAKind) {
@@ -251,6 +255,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
       score += die;
     }
     if (!flag) score = 0;
+    scores_[player] += score;
   }
 
   if (move == kFillFourOfAKind) {
@@ -266,6 +271,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
       score += die;
     }
     if (!flag) score = 0;
+    scores_[player] += score;
   }
 
   if (move == kFillFullHouse) {
@@ -285,6 +291,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
       if (vals[i] == 2) flag2=true;
     }
     if (!flag3 || !flag2) score = 0;
+    scores_[player] += score;
   }
 
   if (move == kFillLittleStraight) {
@@ -299,6 +306,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
     if (vals[0] && vals[1] && vals[2] && vals[3]) score = 30;
     else if (vals[1] && vals[2] && vals[3] && vals[4]) score = 30;
     else if (vals[2] && vals[3] && vals[4] && vals[5]) score = 30;
+    scores_[player] += score;
   }
 
   if (move == kFillBigStraight) {
@@ -312,6 +320,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
     }
     if (vals[0] && vals[1] && vals[2] && vals[3] && vals[4]) score = 40;
     else if (vals[1] && vals[2] && vals[3] && vals[4] && vals[5]) score = 40;
+    scores_[player] += score;
   }
 
   if (move == kFillYacht) {
@@ -327,6 +336,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
       score += die;
     }
     if (!flag) score = 0;
+    scores_[player] += score;
   }
 
   if (move == kFillChoice) {
@@ -337,6 +347,7 @@ void YachtState::ApplyNormalAction(Action move, int player) {
       int die = dice_[i];
       score += die;
     }
+    scores_[player] += score;
   }
    
 } 

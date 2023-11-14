@@ -175,8 +175,171 @@ void YachtState::ApplyNormalAction(Action move, int player) {
 
     scores_[player] += score;
   }
-  // TODO(aaronrice): Score remaining categories here
-}
+  
+  if (move == kFillTwos) {
+    scoring_sheets_[player].twos = filled;
+
+    int score = 0;
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      if (die == 2) {
+        score += die;
+      }
+    }
+  }
+
+  scores_[player] += score;
+
+  if (move == kFillThrees) {
+    scoring_sheets_[player].threes = filled;
+
+    int score = 0;
+      for (int i = 0; i < dice_.size(); ++i) {
+        int die = dice_[i];
+        if (die == 3) {
+          score += die;
+        }
+      }
+  }
+
+  if (move == kFillFours) {
+    scoring_sheets_[player].fours = filled;
+
+    int score = 0;
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      if (die == 4) {
+        score += die;
+      }
+    }
+  }
+
+  if (move == kFillFives) {
+    scoring_sheets_[player].fives = filled;
+
+    int score = 0;
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      if (die == 5) {
+        score += die;
+      }
+    }
+  }
+
+  if (move == kFillSixes) {
+    scoring_sheets_[player].sixes = filled;
+
+    int score = 0;
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      if (die == 6) {
+        score += die;
+      }
+    }
+  }
+
+  if (move == kFillThreeOfAKind) {
+    scoring_sheets_[player].three_of_a_kind = filled;
+
+    int score = 0;
+    vector<int> vals(6,0);
+    bool flag = false;
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      vals[die]++;
+      if (vals[die] >= 3) flag = true;
+      score += die;
+    }
+    if (!flag) score = 0;
+  }
+
+  if (move == kFillFourOfAKind) {
+    scoring_sheets_[player].four_of_a_kind = filled;
+
+    int score = 0;
+    vector<int> vals(6,0);
+    bool flag = false;
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      vals[die]++;
+      if (vals[die] >= 4) flag = true;
+      score += die;
+    }
+    if (!flag) score = 0;
+  }
+
+  if (move == kFillFullHouse) {
+    scoring_sheets_[player].full_house = filled;
+
+    int score = 0;
+    vector<int> vals(6,0);
+    bool flag3 = false;
+    bool flag2 = false;
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      vals[die]++;
+      score += die;
+    }
+    for (int i = 0; i < 6; ++i) {
+      if (vals[i] == 3) flag3=true;
+      if (vals[i] == 2) flag2=true;
+    }
+    if (!flag3 || !flag2) score = 0;
+  }
+
+  if (move == kFillLittleStraight) {
+    scoring_sheets_[player].little_straight = filled;
+
+    int score = 0;
+    vector<int> vals(6,0);
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      vals[die]++;
+    }
+    if (vals[0] && vals[1] && vals[2] && vals[3]) score = 30;
+    else if (vals[1] && vals[2] && vals[3] && vals[4]) score = 30;
+    else if (vals[2] && vals[3] && vals[4] && vals[5]) score = 30;
+  }
+
+  if (move == kFillBigStraight) {
+    scoring_sheets_[player].big_straight = filled;
+
+    int score = 0;
+    vector<int> vals(6,0);
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      vals[die]++;
+    }
+    if (vals[0] && vals[1] && vals[2] && vals[3] && vals[4]) score = 40;
+    else if (vals[1] && vals[2] && vals[3] && vals[4] && vals[5]) score = 40;
+  }
+
+  if (move == kFillYacht) {
+    scoring_sheets_[player].yacht = filled;
+
+    int score = 0;
+    vector<int> vals(6,0);
+    bool flag = false;
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      vals[die]++;
+      if (vals[die] == 5) flag = true;
+      score += die;
+    }
+    if (!flag) score = 0;
+  }
+
+  if (move == kFillChoice) {
+    scoring_sheets_[player].choice = filled;
+
+    int score = 0;
+    for (int i = 0; i < dice_.size(); ++i) {
+      int die = dice_[i];
+      score += die;
+    }
+  }
+   
+} 
 
 void YachtState::IncrementTurn() {
   turns_++;
@@ -294,11 +457,14 @@ std::string YachtState::ScoringSheetToString(
   absl::StrAppend(&result, "Sixes: ");
   absl::StrAppend(&result, scoring_sheet.sixes);
   absl::StrAppend(&result, "\n");
-  absl::StrAppend(&result, "Full House: ");
-  absl::StrAppend(&result, scoring_sheet.full_house);
+  absl::StrAppend(&result, "Three of a Kind: ");
+  absl::StrAppend(&result, scoring_sheet.three_of_a_kind);
   absl::StrAppend(&result, "\n");
   absl::StrAppend(&result, "Four of a Kind: ");
   absl::StrAppend(&result, scoring_sheet.four_of_a_kind);
+  absl::StrAppend(&result, "\n");
+  absl::StrAppend(&result, "Full House: ");
+  absl::StrAppend(&result, scoring_sheet.full_house);
   absl::StrAppend(&result, "\n");
   absl::StrAppend(&result, "Little Straight: ");
   absl::StrAppend(&result, scoring_sheet.little_straight);
@@ -306,12 +472,12 @@ std::string YachtState::ScoringSheetToString(
   absl::StrAppend(&result, "Big Straight: ");
   absl::StrAppend(&result, scoring_sheet.big_straight);
   absl::StrAppend(&result, "\n");
-  absl::StrAppend(&result, "Choice: ");
-  absl::StrAppend(&result, scoring_sheet.choice);
-  absl::StrAppend(&result, "\n");
   absl::StrAppend(&result, "Yacht: ");
   absl::StrAppend(&result, scoring_sheet.yacht);
   absl::StrAppend(&result, "\n\n");
+  absl::StrAppend(&result, "Choice: ");
+  absl::StrAppend(&result, scoring_sheet.choice);
+  absl::StrAppend(&result, "\n");
   return result;
 }
 
@@ -336,12 +502,13 @@ bool YachtState::IsTerminal() const {
       player1_scoring_sheet.fours == empty ||
       player1_scoring_sheet.fives == empty ||
       player1_scoring_sheet.sixes == empty ||
+      player1_scoring_sheet.three_of_a_kind = empty ||
       player1_scoring_sheet.full_house == empty ||
       player1_scoring_sheet.four_of_a_kind == empty ||
       player1_scoring_sheet.little_straight == empty ||
       player1_scoring_sheet.big_straight == empty ||
-      player1_scoring_sheet.choice == empty ||
-      player1_scoring_sheet.yacht == empty) {
+      player1_scoring_sheet.yacht == empty ||
+      player1_scoring_sheet.choice == empty) {
     return false;
   }
 
@@ -352,12 +519,13 @@ bool YachtState::IsTerminal() const {
       player2_scoring_sheet.fours == empty ||
       player2_scoring_sheet.fives == empty ||
       player2_scoring_sheet.sixes == empty ||
-      player2_scoring_sheet.full_house == empty ||
+      player2_scoring_sheet.three_of_a_kind = empty ||
       player2_scoring_sheet.four_of_a_kind == empty ||
+      player2_scoring_sheet.full_house == empty ||
       player2_scoring_sheet.little_straight == empty ||
       player2_scoring_sheet.big_straight == empty ||
-      player2_scoring_sheet.choice == empty ||
-      player2_scoring_sheet.yacht == empty) {
+      player2_scoring_sheet.yacht == empty ||
+      player2_scoring_sheet.choice == empty) {
     return false;
   }
 

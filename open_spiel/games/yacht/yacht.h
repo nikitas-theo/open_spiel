@@ -50,7 +50,9 @@ class ScoringSheet {
   CategoryValue threes = empty;
   CategoryValue fours = empty;
   CategoryValue fives = empty;
-  CategoryValue sixes = empty;
+  CategoryValue sixes = empty;  
+  //TODO (stelios): upper section bonus
+  CategoryValue three_of_a_kind = empty;
   CategoryValue full_house = empty;
   CategoryValue four_of_a_kind = empty;
   CategoryValue little_straight = empty;
@@ -76,25 +78,27 @@ constexpr int kFillThrees = 8;
 constexpr int kFillFours = 9;
 constexpr int kFillFives = 10;
 constexpr int kFillSixes = 11;
-constexpr int kFillFullHouse = 12;
+constexpr int kFillThreeOfAKind = 12;
 constexpr int kFillFourOfAKind = 13;
 constexpr int kFillLittleStraight = 14;
 constexpr int kFillBigStraight = 15;
-constexpr int kFillChoice = 16;
+constexpr int kFillFullHouse = 16;
 constexpr int kFillYacht = 17;
+constexpr int kFillChoice = 18;
 
-constexpr int kScratchOnes = 18;
-constexpr int kScratchTwos = 19;
-constexpr int kScratchThrees = 20;
-constexpr int kScratchFours = 21;
-constexpr int kScratchFives = 22;
-constexpr int kScratchSixes = 23;
-constexpr int kScratchFullHouse = 24;
-constexpr int kScratchFourOfAKind = 25;
-constexpr int kScratchLittleStraight = 26;
-constexpr int kScratchBigStraight = 27;
-constexpr int kScratchChoice = 28;
-constexpr int kScratchYacht = 29;
+constexpr int kScratchOnes = 19;
+constexpr int kScratchTwos = 20;
+constexpr int kScratchThrees = 21;
+constexpr int kScratchFours = 22;
+constexpr int kScratchFives = 23;
+constexpr int kScratchSixes = 24;
+constexpr int kScratchThreeOfAKind = 25;
+constexpr int kScratchFourOfAKind = 26;
+constexpr int kScratchLittleStraight = 27;
+constexpr int kScratchBigStraight = 28;
+constexpr int kScratchFullHouse = 29;
+constexpr int kScratchYacht = 30;
+constexpr int kScratchChoice = 31;
 
 class YachtState : public State {
  public:
